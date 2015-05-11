@@ -1,4 +1,191 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Maintainer: Aidan Obley - aidan@obley.net
+"
+" Version: 1.0 - 11/05/2015 14:31
+"
+" Sections:
+"   * General
+"   * Plugins
+"   * UI
+"   * Text/Indent 
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+" * General
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+" Don't make vim compatible with vi
+set nocompatible " required
+
+" Set encoding to utf8
+set encoding=utf-8
+set fileencoding=utf-8
+
+" History length
+set history=100
+
+" Set to auto read when a file is changed from outside of VIM
+set autoread
+
+" Set , as mapleader
+let mapleader = ","
+let g:mapleader = ","
+
+" ,w to save
+nmap <leader>w :w!<cr>
+
+" :W saves as sudo to get around accidental permission denied errors
+" Don't be dumb with this
+command W w !sudo tee % > /dev/null
+
+" Map <leader>q and <leader>w to previous/next buffer
+noremap <leader>q :bp<CR>
+noremap <leader>w :bn<CR>
+
+" Enable matchit to enhance '%'
+runtime macros/matchit.vim
+
+" Allow backspace to delete over indents and line breaks
+set backspace=indent,eol,start
+
+" Keep buffers loaded in background
+set hidden
+
+" Set unix line endings
+set fileformat=unix
+
+" When reading files try unix first then dos
+set fileformats=unix,dos
+
+" Prevent redraw while running macros
+set lazyredraw
+
+" Saves info from one session to the next
+set viminfo=%,'100,f1,\"100,:100,n~/.viminfo
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+" * Plugins
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+filetype off " required
+" Vundle Init
+let &runtimepath.=',$HOME/.vim/bundle/Vundle.vim'
+call vundle#begin()
+" Vundle plugin required
+Plugin 'gmarik/Vundle.vim'
+
+" General Purpose Plugins
+Plugin 'altercation/vim-colors-solarized' " Solarized theme
+" Web Development Plugins
+
+" Vundle end required
+call vundle#end()
+
+" Easy reload F2
+map <F2> :source $MYVIMRC<CR>:echoe "Vimrc Reloaded!"<CR>
+
+" NERDTree toggle
+map <C-n> :NERDTreeToggle<CR>
+
+" Use plugin indent changes
+" filetype plugin indent on " required
+
+" Ignore plugin indent changes
+filetype plugin on " required
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+" * UI
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+" Hide extra gui in gVim
+if has("gui_running")
+  set guioptions-=m " remove menu bar
+  set guioptions-=T " remove toolbar
+  set guioptions-=r " remove right-hand scrollbar
+  set guioptions-=L " remove left-hand scrollbar
+end
+
+" Enable Tab and Shift+Tab in Visual Mode
+vmap <Tab> >gv
+vmap <S-Tab> <gv
+
+" Turn on syntax hilighting
 syntax on
 
-" Wrap gitcommit file types at the appropriate length
-filetype indent plugin on
+" Show line numbers
+set number
+
+" Show current command
+set showcmd
+
+" Enable wildmenu and configure mode
+set wildmenu
+set wildmode=list:longest
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc
+if has("win16") || has("win32")
+  set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+else
+  set wildignore+=.git\*,.ht\*,.svn\*
+endif
+
+" Always show current position
+set ruler
+
+" Height of the command bar
+set cmdheight=2
+
+" Enable mouse support, even if it won't be used much
+if has('mouse')
+  set mouse=a
+endif
+
+" Search settings
+set ignorecase " Ignore search case
+set incsearch " Find the next match as we search
+set hlsearch " Hilight searched by default
+" Toggle search hilighting
+nnoremap <F3> :set hlsearch!<CR>
+
+" Keep the cursor visible within 3 lines when scrolling
+set scrolloff=3
+
+" Show matching bracket and set blink time
+set showmatch
+set mat=2
+
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+" * Text/Indent
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+" Indentation 
+set expandtab      " Use spaces in place of tab
+set autoindent     " Autoindent based on above line, usually works
+set smartindent    " Smart indentation for C-like languages
+set shiftwidth=2   " Tabs are 2 spaces in reading mode
+set softtabstop=2  " Insert mode tabs are 2 spaces
+
+" Set linelength to 80
+set textwidth=80
+
+" Map pastetoggle to F9
+set pastetoggle=<F9>
+
+" Select all
+noremap <leader>a ggVG
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" 
