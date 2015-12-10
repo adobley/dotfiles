@@ -4,6 +4,86 @@ export ZSH=$HOME/.dotfiles
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/Code
 
+# Uncomment following line if you want red dots to be displayed while waiting for completion
+export COMPLETION_WAITING_DOTS="true"
+
+# Correct spelling for commands
+setopt correct
+
+# turn off the infernal correctall for filenames
+unsetopt correctall
+
+# Fun with SSH
+if [ $(ssh-add -l | grep -c "The agent has no identities." ) -eq 1 ]; then
+  if [[ "$(uname -s)" == "Darwin" ]]; then
+    # We're on OS X. Try to load ssh keys using pass phrases stored in
+    # the OSX keychain.
+    #
+    # You can use ssh-add -K /path/to/key to store pass phrases into
+    # the OSX keychain
+    ssh-add -k
+  fi
+fi
+
+if [ -f ~/.ssh/id_rsa ]; then
+  if [ $(ssh-add -l | grep -c ".ssh/id_rsa" ) -eq 0 ]; then
+    ssh-add ~/.ssh/id_rsa
+  fi
+fi
+
+if [ -f ~/.ssh/id_dsa ]; then
+  if [ $(ssh-add -L | grep -c ".ssh/id_dsa" ) -eq 0 ]; then
+    ssh-add ~/.ssh/id_dsa
+  fi
+fi
+
+# start zgen
+if [ -f ~/.zgen-setup ]; then
+  source ~/.zgen-setup
+fi
+# end zgen
+
+# set some history options
+setopt append_history
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_all_dups
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_reduce_blanks
+setopt hist_save_no_dups
+setopt hist_verify
+
+# Share your history across all your terminal windows
+setopt share_history
+#setopt noclobber
+
+# set some more options
+setopt pushd_ignore_dups
+#setopt pushd_silent
+
+# Keep a ton of history.
+HISTSIZE=100000
+SAVEHIST=100000
+HISTFILE=~/.zsh_history
+export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
+
+# Long running processes should return time after they complete. Specified
+# in seconds.
+REPORTTIME=2
+TIMEFMT="%U user %S system %P cpu %*Es total"
+
+# Expand aliases inline - see http://blog.patshead.com/2012/11/automatically-expaning-zsh-global-aliases---simplified.html
+globalias() {
+   if [[ $LBUFFER =~ ' [A-Z0-9]+$' ]]; then
+     zle _expand_alias
+     zle expand-word
+   fi
+   zle self-insert
+}
+
+zle -N globalias
+
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
 # you'll have access to them in your scripts.
