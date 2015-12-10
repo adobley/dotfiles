@@ -1,8 +1,14 @@
 # shortcut to this dotfiles path is $ZSH
-export ZSH=$HOME/.dotfiles
+export ZSH_DOTFILES=$HOME/.dotfiles
+
+# Set ZSH Theme
+export ZSH_THEME="bullet-train"
 
 # your project folder that we can `c [tab]` to
 export PROJECTS=~/Code
+
+# Export xterm settings
+export TERM='xterm-256color'
 
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 export COMPLETION_WAITING_DOTS="true"
@@ -13,35 +19,10 @@ setopt correct
 # turn off the infernal correctall for filenames
 unsetopt correctall
 
-# Fun with SSH
-if [ $(ssh-add -l | grep -c "The agent has no identities." ) -eq 1 ]; then
-  if [[ "$(uname -s)" == "Darwin" ]]; then
-    # We're on OS X. Try to load ssh keys using pass phrases stored in
-    # the OSX keychain.
-    #
-    # You can use ssh-add -K /path/to/key to store pass phrases into
-    # the OSX keychain
-    ssh-add -k
-  fi
-fi
-
-if [ -f ~/.ssh/id_rsa ]; then
-  if [ $(ssh-add -l | grep -c ".ssh/id_rsa" ) -eq 0 ]; then
-    ssh-add ~/.ssh/id_rsa
-  fi
-fi
-
-if [ -f ~/.ssh/id_dsa ]; then
-  if [ $(ssh-add -L | grep -c ".ssh/id_dsa" ) -eq 0 ]; then
-    ssh-add ~/.ssh/id_dsa
-  fi
-fi
-
 # start zgen
 if [ -f ~/.zgen-setup ]; then
   source ~/.zgen-setup
 fi
-# end zgen
 
 # set some history options
 setopt append_history
@@ -94,7 +75,7 @@ fi
 
 # all of our zsh files
 typeset -U config_files
-config_files=($ZSH/**/*.zsh)
+config_files=($ZSH_DOTFILES/**/*.zsh)
 
 # load the path files
 for file in ${(M)config_files:#*/path.zsh}
